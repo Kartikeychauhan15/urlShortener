@@ -13,7 +13,7 @@ export const saveShortUrl = async (shortUrl, longUrl, userId) => {
     } 
     await newUrl.save();
     }catch(err) {
-        if(err.code === 11000) {
+        if(err.code == 11000) {
             // Duplicate key error, likely due to a unique index on short_url
             throw new ConflictError("Short URL already exists");
         }
@@ -22,7 +22,12 @@ export const saveShortUrl = async (shortUrl, longUrl, userId) => {
 }
 
 export const getShortUrl = async (shortUrl) => {
-    
-    return await urlSchema.findOneAndUpdate({ short_url: shortUrl }),{$inc:{clicks:1}}
+    return await urlSchema.findOneAndUpdate(
+    { short_url: shortUrl },
+    { $inc: { clicks: 1 } },
+    { new: true } // optional: returns the updated document
+);
+
+    // return await urlSchema.findOneAndUpdate({ short_url: shortUrl }),{$inc:{clicks:1}}
 }
 
