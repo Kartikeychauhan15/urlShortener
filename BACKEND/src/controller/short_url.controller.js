@@ -1,14 +1,18 @@
 import { getShortUrl } from "../dao/short_url.js";
-import { createShortUrlServiceWihoutuser } from "../services/short_url.service.js";
+import { createShortUrlWithuser, createShortUrlWihoutuser } from "../services/short_url.service.js";
 import wrapAsync from "../utils/tryCatchWrapper.js";
-// import { generateNanoId } from "../utils/helper";
 
-export const createShortUrl = wrapAsync(async (req, res, next) => {
-  const { url } = req.body;
-  const shortUrl = await createShortUrlServiceWihoutuser(url);
 
-  res.status(200).json({shortUrl : process.env.APP_URL + shortUrl});
-});
+export const createShortUrl = wrapAsync(async (req,res)=>{
+    const data = req.body
+    let shortUrl
+    if(req.user){
+        shortUrl = await createShortUrlWithuser(data.url,req.user._id,data.slug)
+    }else{  
+        shortUrl = await createShortUrlWihoutuser(data.url)
+    }
+    res.status(200).json({shortUrl : process.env.APP_URL + shortUrl})
+})
 
 export const redirectFromShortUrl = wrapAsync(async (req, res, next) => {
   const { id } = req.params;
@@ -18,3 +22,9 @@ export const redirectFromShortUrl = wrapAsync(async (req, res, next) => {
   }
   res.redirect(url.full_url);
 });
+
+export const createCustomShortUrl = wrapAsync(async (req,res)=>{
+  const {url, slug} = req.body;
+  const shortUrl = await createShortUrlWihoutuser(url, slug);
+  res.status(200).json({shortUrl : process.env.APP_URL + shortUrl});
+})
