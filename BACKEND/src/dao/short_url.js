@@ -28,6 +28,6 @@ export const getShortUrl = async (shortUrl) => {
   );
 };
 
-export const getCustomUrl = async (slug) => {
-  return await urlSchema.findOne({ short_url: shortUrl });
-};
+export const getCustomShortUrl = async (slug) => {
+    return await urlSchema.findOne({short_url:slug});
+}

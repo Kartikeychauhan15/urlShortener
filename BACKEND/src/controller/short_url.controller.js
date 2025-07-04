@@ -5,12 +5,18 @@ import wrapAsync from "../utils/tryCatchWrapper.js";
 
 export const createShortUrl = wrapAsync(async (req,res)=>{
     const data = req.body
+
     let shortUrl
     if(req.user){
         shortUrl = await createShortUrlWithuser(data.url,req.user._id,data.slug)
     }else{  
-        shortUrl = await createShortUrlWihoutuser(data.url)
+        shortUrl = await createShortUrlWihoutuser(data.url,data.slug)
     }
+      console.log("Generated shortUrl:", shortUrl);
+
+  if (!shortUrl) {
+    return res.status(400).json({ success: false, message: "shortUrl is not defined" });
+  }
     res.status(200).json({shortUrl : process.env.APP_URL + shortUrl})
 })
 
