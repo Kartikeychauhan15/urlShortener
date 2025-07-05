@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { createShortUrl } from "../api/shortUrl.api";
+import { useSelector } from "react-redux";
 
 const UrlForm = () => {
 
   const [url, setUrl] = useState("https://facebook.com")
   const [shortUrl, setShortUrl] = useState()
  const [copied, setCopied] = useState(false)
-
-
+ const [customSlug, setCustomSlug] = useState("")
+ const {isAuthenticated} = useSelector((state)=> state.auth)
   const handleSubmit = async ()=>{
     const shortUrl = await createShortUrl(url);
     // console.log(data);
@@ -50,14 +51,14 @@ const UrlForm = () => {
       >
         Shorten URL
       </button>
-      {/* 
-      {error && (
+      
+      {/* {error && (
         <div className="mt-4 p-3 bg-red-100 text-red-700 rounded-md">
           {error}
         </div>
-      )}
-      */}
-      {/* 
+      )} */}
+      
+      
       {isAuthenticated && (
         <div className="mt-4">
           <label
@@ -76,7 +77,7 @@ const UrlForm = () => {
           />
         </div>
       )}
-      */}
+     
       {shortUrl && (
         <div className="mt-6">
           <h2 className="text-lg font-semibold mb-2">Your shortened URL:</h2>

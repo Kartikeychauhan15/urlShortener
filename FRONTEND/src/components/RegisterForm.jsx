@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-// import { registerUser } from "../api/user.api";
-// import { useDispatch } from "react-redux";
-// import { login } from "../store/slice/authSlice";
-// import { useNavigate } from "@tanstack/react-router";
+import { registerUser } from "../api/user.api";
+import { useDispatch } from "react-redux";
+import { login } from "../store/slice/authSlice";
+import { useNavigate } from "@tanstack/react-router";
 
 const RegisterForm = ({ state }) => {
   const [name, setName] = useState("");
@@ -10,8 +10,8 @@ const RegisterForm = ({ state }) => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-//   const dispatch = useDispatch();
-//   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
