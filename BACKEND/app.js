@@ -13,7 +13,10 @@ import { attachUser } from './src/utils/attachUser.js';
 import cookieParser from 'cookie-parser';
 
 const app = express();
-app.use(cors()); // CORS middleware to allow cross-origin requests
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true
+})); // CORS middleware to allow cross-origin requests
 
 dotenv.config("./.env"); //env ka path bata rha hai
 

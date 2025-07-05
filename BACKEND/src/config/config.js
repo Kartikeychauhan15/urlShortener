@@ -3,6 +3,6 @@ export const cookieOptions= {
     
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production', // Set to true in production
-    sameSite: 'lax', // Helps prevent CSRF attacks
+    sameSite: 'Lax', // Helps prevent CSRF attacks
     maxAge: 60 * 60 * 1000 // 3 days in milliseconds
 }
