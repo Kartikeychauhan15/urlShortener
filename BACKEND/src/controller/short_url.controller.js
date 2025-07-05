@@ -10,7 +10,7 @@ export const createShortUrl = wrapAsync(async (req,res)=>{
     if(req.user){
         shortUrl = await createShortUrlWithuser(data.url,req.user._id,data.slug)
     }else{  
-        shortUrl = await createShortUrlWihoutuser(data.url,data.slug)
+        shortUrl = await createShortUrlWihoutuser(data.url)
     }
       console.log("Generated shortUrl:", shortUrl);
 
