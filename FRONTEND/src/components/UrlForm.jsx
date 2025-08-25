@@ -6,7 +6,7 @@ import { queryClient } from '../main'
 
 const UrlForm = () => {
 
-  const [url, setUrl] = useState("https://facebook.com")
+  const [url, setUrl] = useState("") //https://facebook.com as a example
   const [shortUrl, setShortUrl] = useState()
  const [copied, setCopied] = useState(false)
  const [customSlug, setCustomSlug] = useState("")
