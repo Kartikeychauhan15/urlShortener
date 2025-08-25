@@ -7,8 +7,8 @@ import { useNavigate } from "@tanstack/react-router";
 
 
 const LoginForm = ({ state }) => {
-  const [email, setEmail] = useState("test4@test.com");
-  const [password, setPassword] = useState("hello4");
+  const [email, setEmail] = useState(""); 
+  const [password, setPassword] = useState(""); 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
     const navigate = useNavigate();
