@@ -1,24 +1,47 @@
 import { getShortUrl } from "../dao/short_url.js";
-import { createShortUrlWithuser, createShortUrlWihoutuser } from "../services/short_url.service.js";
+import {
+  createShortUrlWithuser,
+  createShortUrlWihoutuser,
+} from "../services/short_url.service.js";
 import wrapAsync from "../utils/tryCatchWrapper.js";
 
+// export const createShortUrl = wrapAsync(async (req, res) => {
+//   const data = req.body;
 
-export const createShortUrl = wrapAsync(async (req,res)=>{
-    const data = req.body
+//   let shortUrl;
+//   if (req.user) {
+//     shortUrl = await createShortUrlWithuser(data.url, req.user._id, data.slug);
+//   } else {
+//     shortUrl = await createShortUrlWihoutuser(data.url);
+//   }
+//   console.log("Generated shortUrl:", shortUrl);
 
-    let shortUrl
-    if(req.user){
-        shortUrl = await createShortUrlWithuser(data.url,req.user._id,data.slug)
-    }else{  
-        shortUrl = await createShortUrlWihoutuser(data.url)
-    }
-      console.log("Generated shortUrl:", shortUrl);
+//   if (!shortUrl) {
+//     return res
+//       .status(400)
+//       .json({ success: false, message: "shortUrl is not defined" });
+//   }
+//   res.status(200).json({ shortUrl: process.env.APP_URL + shortUrl });
+// });
 
-  if (!shortUrl) {
-    return res.status(400).json({ success: false, message: "shortUrl is not defined" });
+export const createShortUrl = wrapAsync(async (req, res) => {
+  const data = req.body;
+
+  let result;
+
+  if (req.user) {
+    result = await createShortUrlWithuser(data.url, req.user._id, data.slug);
+  } else {
+    result = await createShortUrlWihoutuser(data.url);
   }
-    res.status(200).json({shortUrl : process.env.APP_URL + shortUrl})
-})
+
+  return res.status(200).json({
+    success: true,
+    shortUrl: result.shortUrl,
+    qrCode: result.qrCode,
+    slug: result.slug,
+  });
+});
 
 export const redirectFromShortUrl = wrapAsync(async (req, res, next) => {
   const { id } = req.params;
@@ -29,8 +52,8 @@ export const redirectFromShortUrl = wrapAsync(async (req, res, next) => {
   res.redirect(url.full_url);
 });
 
-export const createCustomShortUrl = wrapAsync(async (req,res)=>{
-  const {url, slug} = req.body;
+export const createCustomShortUrl = wrapAsync(async (req, res) => {
+  const { url, slug } = req.body;
   const shortUrl = await createShortUrlWihoutuser(url, slug);
-  res.status(200).json({shortUrl : process.env.APP_URL + shortUrl});
-})
+  res.status(200).json({ shortUrl: process.env.APP_URL + shortUrl });
+});

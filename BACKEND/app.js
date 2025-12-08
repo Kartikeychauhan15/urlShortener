@@ -32,7 +32,7 @@ app.use(attachUser);
 
 app.use("/api/user",user_routes)
 app.use("/api/create",short_url)
-app.use("/api/auth",auth_routes)
+app.use("/api/auth",auth_routes);
 app.get("/:id",redirectFromShortUrl);
 
 
